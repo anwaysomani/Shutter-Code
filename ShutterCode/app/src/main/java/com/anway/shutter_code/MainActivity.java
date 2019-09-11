@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView text;
     private Button scan;
     private IntentIntegrator qrscan;
+    private TextView fld1, fld2, fld3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scan = (Button) findViewById(R.id.runScan);
         text = (TextView) findViewById(R.id.finalText);
 
+        fld1 = (TextView) findViewById(R.id.field1);
+        fld2 = (TextView) findViewById(R.id.field2);
+        fld3 = (TextView) findViewById(R.id.field3);
+
         qrscan = new IntentIntegrator(this);
         scan.setOnClickListener(this);
+        qrscan.initiateScan();
     }
 
     //Getting the scan results
@@ -47,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //converting the data to json
                     JSONObject obj = new JSONObject(result.getContents());
                     //setting values to textviews
-                    text.setText(obj.getString("name"));
+                    fld1.setText(obj.getString("to"));
+                    fld2.setText(obj.getString("sub"));
+                    fld3.setText(obj.getString("body"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //if control comes here
